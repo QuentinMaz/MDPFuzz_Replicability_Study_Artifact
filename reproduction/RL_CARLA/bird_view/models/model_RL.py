@@ -80,37 +80,40 @@ class DQN(nn.Module):
 
         hidden_size = 1024
 
-        self.fcnoisy_h_a = NoisyLinear(size_RL_state, hidden_size)
+        self.fcnoisy_h_a = NoisyLinear(size_RL_state, hidden_size, disable_cuda=self.disable_cuda)
 
         hidden_size2 = 512
 
         self.fcnoisy0_z_a_lane_follow = NoisyLinear(
             hidden_size + 2 * self.magic_number_repeat_scaler_in_fc * self.history_length,
-            hidden_size2,
+            hidden_size2, disable_cuda=self.disable_cuda
         )
         self.fcnoisy0_z_a_straight = NoisyLinear(
             hidden_size + 2 * self.magic_number_repeat_scaler_in_fc * self.history_length,
-            hidden_size2,
+            hidden_size2, disable_cuda=self.disable_cuda
         )
         self.fcnoisy0_z_a_right = NoisyLinear(
             hidden_size + 2 * self.magic_number_repeat_scaler_in_fc * self.history_length,
-            hidden_size2,
+            hidden_size2, disable_cuda=self.disable_cuda
         )
         self.fcnoisy0_z_a_left = NoisyLinear(
             hidden_size + 2 * self.magic_number_repeat_scaler_in_fc * self.history_length,
-            hidden_size2,
+            hidden_size2, disable_cuda=self.disable_cuda
         )
 
-        self.fcnoisy1_z_a_lane_follow = NoisyLinear(hidden_size2, action_space)
-        self.fcnoisy1_z_a_straight = NoisyLinear(hidden_size2, action_space)
-        self.fcnoisy1_z_a_right = NoisyLinear(hidden_size2, action_space)
-        self.fcnoisy1_z_a_left = NoisyLinear(hidden_size2, action_space)
+        self.fcnoisy1_z_a_lane_follow = NoisyLinear(hidden_size2, action_space, disable_cuda=self.disable_cuda)
+        self.fcnoisy1_z_a_straight = NoisyLinear(hidden_size2, action_space, disable_cuda=self.disable_cuda)
+        self.fcnoisy1_z_a_right = NoisyLinear(hidden_size2, action_space, disable_cuda=self.disable_cuda)
+        self.fcnoisy1_z_a_left = NoisyLinear(hidden_size2, action_space, disable_cuda=self.disable_cuda)
 
     def forward(self, images, speeds, orders, steerings, num_quantiles):
 
         batch_size = images.shape[0]
 
-        quantiles = torch.cuda.FloatTensor(num_quantiles * batch_size, 1).uniform_(0, 1)
+        if self.disable_cuda:
+            quantiles = torch.FloatTensor(num_quantiles * batch_size, 1).uniform_(0, 1)
+        else:
+            quantiles = torch.cuda.FloatTensor(num_quantiles * batch_size, 1).uniform_(0, 1)
 
         quantile_net = quantiles.repeat([1, self.quantile_embedding_dim])
 
@@ -119,7 +122,7 @@ class DQN(nn.Module):
                 1,
                 self.quantile_embedding_dim + 1,
                 1,
-                device=torch.device("cuda"),
+                device=torch.device("cpu") if self.disable_cuda else torch.device("cuda"),
                 dtype=torch.float32,
             )
             * math.pi

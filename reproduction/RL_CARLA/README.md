@@ -43,6 +43,7 @@ The rest of this document assumes the environment to be activated.
 First, open a terminal (remind to activate the carla environment) and run `./carla_RL_IAs/CarlaUE4.sh -fps=10 -benchmark -carla-port=PORT` to start the server.
 
 Then, in a second terminal, run `python benchmark_agent.py --suite=town2 --max-run 100 --path-folder-model model_RL_IAs_only_town01_train_weather/ --crop-sky --port=PORT --seed SEED` with the same `PORT` value to start *Fuzzer-O*. Append to the previous command `--emguide` to launch *MDPFuzz-O* instead.
+GPU can be manually disabled with the additional argument `--disable-cuda`.
 
 Please note that:
 - Since our hardware does not have GPU, we doubled the original sampling and fuzzing times. You can revert this change in `benchmark/run_benchmark.py` lines 183-184.

@@ -37,6 +37,7 @@ def run(args, model_path, port, suite, seed, path, em_guide, replay):
 
             agent_class = agent_IAs_RL.AgentIAsRL
             agent_maker = lambda: agent_class(args)
+            print('Agent loaded.')
             if args.replay:
                 print('recording')
                 env._client.start_recorder(args.path_videos)
@@ -142,7 +143,7 @@ if __name__ == "__main__":
         "--quantile-embedding-dim", default=64, type=int, help="n in equation 4 in IQN paper"
     )
     # adds path for logging
-    parser.add_argument("--path", type=str, default='../../../data/carla/')
+    parser.add_argument("--path", type=str, default='../data/carla/')
 
     args = parser.parse_args()
     args.steps_image = [
@@ -164,6 +165,8 @@ if __name__ == "__main__":
     )
 
     torch.set_num_threads(1)
+
+    print('Pytorch device:', args.device)
 
     if args.replay:
         run(
