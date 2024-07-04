@@ -1,0 +1,21 @@
+# IDE
+.vscode
+
+# Cache
+__pycache__/
+
+# Distribution / packaging
+develop-eggs/
+eggs/
+.eggs/
+share/python-wheels/
+*.egg-info/
+*.egg
+.pytest_cache/
+
+# Logging and miscellaneous extensions
+*.txt
+*.png
+*.pickle
+*.pth
+logs/
