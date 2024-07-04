@@ -1,0 +1,9 @@
+We failed to set up the Python virtual environment when we followed the initial instructions.
+Instead, we had to:
+- Extract from the .yml file the pip requirements (now in requirements.txt).
+- Comment the tensorflow-gpu==1.15.0 package.
+- Comment the pip installation part of the .yml file.
+- Create the virtual environment and activate it.
+- Install the pip packages dumped in requirements.txt with pip install -r requirements.txt.
+- Once pip itself is updated (pip==20.3.4 is among the packages installed), install the commented package with pip install tensorflow-gpu==1.15.0.
+- Install pandas package with pip install pandas.
