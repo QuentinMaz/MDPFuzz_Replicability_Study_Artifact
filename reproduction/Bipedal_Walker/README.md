@@ -12,7 +12,7 @@ pip install -e .
 cp ./stable_baselines3/setup.py ./
 pip install -e .
 ```
-The code related to the experiments are under `rl-baselines3-zoo/`. Please navigate to the latter by executing `cd rl-baselines3-zoo`.
+The code related to the experiments is under `rl-baselines3-zoo/`. Please navigate to the latter by executing `cd rl-baselines3-zoo`.
 This folder also contains the model under test, under `rl-trained-agents`.
 
 ## Experiments

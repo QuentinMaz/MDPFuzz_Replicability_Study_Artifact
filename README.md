@@ -18,22 +18,29 @@ The scenarios (also called *environments*) solved by the policies are quite dive
 ### Requirements
 
 The experiments solely use [Python](https://www.python.org/), and the dependencies of each case study is installed in virtual environments with the package manager Conda.
-We provide a Docker image which has already all the virtual environments installed.
+We provide a Docker image which has already all the virtual environments installed (except the one for the use case *CARLA*; see below).
 As such, we invite the user to follow the software's instructions, which are detailed [here](https://docs.docker.com/engine/install/).
-We also detail how to install each virtual environment as the beginning of the corresponding `README` files.
+We also detail how to install each virtual environment as the beginning of the corresponding `README` files in case the Docker image is not used.
 To that regard, we tested them with a Ubuntu 20.04 system.
-Even though a graphic card is not needed, we strongly recommend it for the case study *CARLA*, a driving simulator, which is by far the most time-consuming case to execute.
-Similarly, we encourage the user to replicate the other use cases first, since we deem the *CARLA*'s experiments untractable (we needed around three months to setup and succesfully run all of them).
+
+#### Note on *CARLA*
+This use case is by far the most time-consuming to execute and the most difficult to setup and replicate.
+Besides the very long execution times, this driving simulator uses a client-server communication, making the Docker image not compatible.
+Therefore, to replicate the related experiments, you will have to install the environment on your local system.
+Similarly, for that use case we strongly recommend a graphic card.
+
+Therefore, we encourage the user to use the Docker image and replicate the other use cases, since we deem the *CARLA*'s experiments untractable (we needed around three months to setup and succesfully run all of them).
 
 #### Running the experiements on your system
 If you want to install the virtual environments on your local machine, the only requirement for is to install Python as well as Conda, whose installation instructions can be found [here](https://www.python.org/downloads/) and [here](https://docs.anaconda.com/miniconda/#quick-command-line-install), respectively.
 Your system should be ready for running the experiments once the command `conda` works on your system (you can quickly check that with `conda --version`).
 
 #### Running the experiments inside the container
+If you want to use the provided Docker image, run the following commands:
 ```bash
-# Build the image
+# build the image
 docker build -t artifact .
-# Run the image iteractively
+# run the image iteractively
 docker run -it artifact
 ```
 
@@ -48,15 +55,15 @@ Overall, the artifact consists in:
 
 ### Step-by-step Instructions
 
-#### Reproduction Study
+##### Reproduction Study
 
 Navigate to the folder `reproduction/` and follow the `README` file.
 
-#### Replication Study
+##### Replication Study
 
 Navigate to the folder `replication/` and follow the `README` file.
 
-### Demonstration
+## Demonstration
 
 As previously introduced, the artifact involves a lot of executions; the ones from the *CARLA* case being especially long.
 Also, the reproduction study has intrisic time constraints, since its evaluation protocol consists in testing the *policies* for a fixed amount of time (2 hours of initialization + 12 hours of testing).

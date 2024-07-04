@@ -29,3 +29,5 @@ The experiments all share the same protocol, which consists of **2 hours** of in
 As such, unless the use cases are run in parallel, this entire study could take several days to complete.
 The amount of data generated should be at most 2.0 GB.
 As introduced previously, we strongly recommend avoiding the use case *CARLA* unless the user wants to *exactly* replicate the study.
+We provide convenient bash scripts to execute the experiments in parallel, called `launch_experiments.sh`, for each case studied.
+To use them though, it might be required to make the script executable, which can be done with `chmod +x launch_experiments.sh`.
