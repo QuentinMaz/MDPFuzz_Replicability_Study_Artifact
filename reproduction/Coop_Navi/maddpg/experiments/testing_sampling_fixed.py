@@ -65,6 +65,9 @@ def parse_args():
     parser.add_argument("--seed", type=int, default=2021)
     parser.add_argument("--no_coverage", action="store_true", default=False)
     parser.add_argument("--path", type=str, default="../../../data/coop/sampling_fixed/")
+
+    parser.add_argument('--init_budget', type=int, default=120, help="Time for initializing fuzzing (in minutes)")
+    parser.add_argument('--fuzz_budget', type=int, default=720, help="Time for fuzzing (in minutes)")
     return parser.parse_args()
 
 
@@ -395,8 +398,8 @@ if __name__ == '__main__':
     # print(type(args_list), args_list._get_kwargs())
 
     # as minutes
-    init_budget = 120
-    fuzz_budget = 720
+    init_budget = args_list.init_budget  # type: int
+    fuzz_budget = args_list.fuzz_budget  # type: int
 
     no_coverage = args_list.no_coverage
     seed = args_list.seed
@@ -404,10 +407,16 @@ if __name__ == '__main__':
 
     folder = '../../../data/coop/'
     if not os.path.isdir(folder):
-        os.mkdir(folder)
+        try:
+            os.mkdir(folder)
+        except:
+            pass
     subfolder = 'sampling_fixed/'
     if not os.path.isdir(folder + subfolder):
-        os.mkdir(folder + subfolder)
+        try:
+            os.mkdir(folder + subfolder)
+        except:
+            pass
 
     folder += subfolder
 
@@ -417,7 +426,10 @@ if __name__ == '__main__':
         subfolder = 'mdpfuzz/'
 
     if not os.path.isdir(folder + subfolder):
-        os.mkdir(folder + subfolder)
+        try:
+            os.mkdir(folder + subfolder)
+        except:
+            pass
 
     path += subfolder
     path += str(seed)

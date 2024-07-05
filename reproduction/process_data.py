@@ -84,7 +84,7 @@ def count_distinct_faults_in_redundant_data_over_time(df_list: List[pd.DataFrame
                     fault_revealing_inputs.append(i.tolist())
 
         fault_accumulator.append(num_faults)
-        print(f'Found {num_faults} faults in total and detects {len(fault_revealing_inputs)} fault-revealing inputs.')
+        # print(f'Found {num_faults} faults in total and detects {len(fault_revealing_inputs)} fault-revealing inputs.')
         results.append(np.array(fault_accumulator))
     return results
 
@@ -102,7 +102,7 @@ def compute_fault_discovery_results(df_list: List[pd.DataFrame]) -> Tuple[np.nda
         # oracles.append(df['oracle'].to_numpy())
     t0 = time.time()
     if not np.all([len(arr) == len(np.unique(arr, axis=0)) for arr in inputs]):
-        print('WARNING: redundant inputs found.')
+        # print('WARNING: redundant inputs found.')
         # tmp = count_faults_stochastic_executions(inputs, oracles)
         tmp = count_distinct_faults_in_redundant_data_over_time(df_list)
     else:

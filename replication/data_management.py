@@ -18,15 +18,11 @@ def load_log_file(filename: str):
     '''Returns a log file as a pd.DataFrame.'''
     if not filename.endswith('.txt'):
         filename += '.txt'
-    assert os.path.isfile(filename), filename
+    if not os.path.isfile(filename):
+        raise FileNotFoundError("\"{}\" not found.".format(filename))
 
     logger = Logger(filename)
     df = logger.load_logs()
-    #TODO: remove this fix in the release!
-    if 'fuzzer' in filename and 'carla' in filename:
-        # print(f'changing inputs found in file {filename}')
-        df['input'] = np.arange(len(df))
-
     return df
 
 
@@ -120,7 +116,10 @@ def load_dict(filepath: str) -> Union[str, float, int, Tuple[np.ndarray, np.ndar
     It return an empty dictionnary if the dumped dictionnary is malformed.
     '''
     filepath = filepath.split('.json')[0] + '.json'
-    assert os.path.exists(filepath), filepath
+    if not os.path.isfile(filepath):
+        print("\"{}\" not found.".format(filepath))
+        print("Empty dictionary returned.")
+        return {}
     try:
         with open(filepath, 'r') as f:
             d = json.load(f)

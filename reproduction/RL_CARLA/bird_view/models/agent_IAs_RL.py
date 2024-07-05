@@ -62,7 +62,7 @@ class AgentIAsRL:
             current_RL_model_dict = current_RL_model.state_dict()
 
             # print("we load RL model ", current_model)
-            checkpoint = torch.load(current_model)
+            checkpoint = torch.load(current_model, map_location=args.device)
 
             # 1. filter out unnecessary keys
             pretrained_dict = {
@@ -226,7 +226,7 @@ class AgentIAsRL:
             brake = 0
         else:
             brake = brake / len(tab_action)
-        
+
         # 8 models here
         # HACK: local sensitivity
         current_entropy = np.std(np.array(tab_action))

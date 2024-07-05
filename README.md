@@ -32,17 +32,18 @@ Similarly, for that use case we strongly recommend a graphic card.
 Therefore, we encourage the user to use the Docker image and replicate the other use cases, since we deem the *CARLA*'s experiments untractable (we needed around three months to setup and succesfully run all of them).
 
 #### Running the experiments on your system
-If you want to install the virtual environments on your local machine, the only requirement is to install Python as well as Conda, whose installation instructions can be found [here](https://www.python.org/downloads/) and [here](https://docs.anaconda.com/miniconda/#quick-command-line-install), respectively.
+
+If you want to install the virtual environments on your local machine, the only requirement for is to install Python as well as Conda, whose installation instructions can be found [here](https://www.python.org/downloads/) and [here](https://docs.anaconda.com/miniconda/#quick-command-line-install), respectively.
 Your system should be ready for running the experiments once the command `conda` works on your system (you can quickly check that with `conda --version`).
 
-#### Running the experiments inside the container
+<!-- #### Running the experiments inside the container
 If you want to use the provided Docker image, run the following commands:
 ```bash
 # build the image
 docker build -t artifact .
 # run the image iteractively
 docker run -it artifact
-```
+``` -->
 
 If you are running a non-x86 system, e.g. Apple Silicon, you must add the target platform to the Docker commands.
 This is necessary, because the reproduction requires an old Python version (3.7.4) which is not available for the aarch64 architecture.
@@ -65,13 +66,27 @@ Overall, the artifact consists in:
 
 ### Step-by-step Instructions
 
-##### Reproduction Study
+Run a container named `exp_container` with a connection to your local file system with:
+```
+docker run --name exp_container -v .:/output -it artifact
+```
+You can stop the container with `exit` (once in the terminal).
+To restart the container (since you won't be able to run all the experiments at once):
+```
+docker start exp_container
+docker exec -it exp_container /bin/bash
+```
+
+
+#### Reproduction Study
 
 Navigate to the folder `reproduction/` and follow the `README` file.
 
-##### Replication Study
+#### Replication Study
 
 Navigate to the folder `replication/` and follow the `README` file.
+
+The two studies are independent: you can start replicating them in any order.
 
 ## Demonstration
 
@@ -82,7 +97,11 @@ This demonstration tests the two testing methods of the reproduction study (refe
 
 #### Instructions
 
-If you are using the container, navigate to the *ACAS Xu* use case of the reproduction folder and activate the corresponding Python environment:
+If you are using the container, start it such that will be automatically removed once the terminal is closed, with a connection to your local file system with:
+```
+docker run --rm -v .:/output -it artifact
+```
+Then, navigate to the *ACAS Xu* use case of the reproduction folder and activate the corresponding Python environment:
 ```bash
 (in the docker container)
 cd /src/reproduction/ACAS
@@ -103,6 +122,13 @@ cd ..
 python result_script.py
 ```
 The plot is exported to the file `fault_discovery_plot.png`.
+If you are using the container, export the file to your local system and exit the container:
+```
+cp fault_discovery_plot.png /output
+exit
+```
+The file should appear in you current directory.
+The plot function is designed to work with the final results: therefore, the time axis (horizontal) does not correspond to the time of the demonstration (10 minutes).
 <!-- First, build the Docker image with `docker build -t demo .`. Then, run the image into a container with the command `docker run --rm -v .:/output demo`.
 The command above ensures that container is automatically shut down once finished.
 The results (both the image and the raw, log files) are exported in the current repository. -->

@@ -980,3 +980,4 @@ if __name__ == '__main__':
                 fuzz_without_coverage(fuzzer, fuzz_budget, path)
             else:
                 fuzz_with_coverage(fuzzer, fuzz_budget, path)
+            print("Execution of {} done successfully!".format("fuzzer" if args.no_coverage else "mdpfuzz"))

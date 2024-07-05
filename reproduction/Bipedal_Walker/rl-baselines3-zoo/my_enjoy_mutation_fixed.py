@@ -177,7 +177,10 @@ def main():
         os.mkdir(folder)
     subfolder = 'mutation_fixed/'
     if not os.path.isdir(folder + subfolder):
-        os.mkdir(folder + subfolder)
+        try:
+            os.mkdir(folder + subfolder)
+        except:
+            pass
 
     folder += subfolder
 
@@ -187,7 +190,10 @@ def main():
         subfolder = 'mdpfuzz/'
 
     if not os.path.isdir(folder + subfolder):
-        os.mkdir(folder + subfolder)
+        try:
+            os.mkdir(folder + subfolder)
+        except:
+            pass
 
     path += subfolder
     path += str(seed)

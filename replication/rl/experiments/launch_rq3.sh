@@ -1,5 +1,15 @@
 #!/bin/bash
 
+if [ "$#" -ne 1 ]; then
+    echo "Please enter the RL key: $0 {bw|ll|tt}"
+    exit 1
+fi
+
+if [[ "$1" != "bw" && "$1" != "ll" && "$1" != "tt" ]]; then
+    echo "Invalid RL key: $1. Expected one of {bw|ll|tt}"
+    exit 1
+fi
+
 script_name="python test_mdpfuzz_rl.py"
 
 scripts=()

@@ -34,48 +34,75 @@ SHELL ["/bin/bash", "-c"]
 #     && pip install ipython
 
 # REPRODUCTION ENVS
-## ACAS
+## ACAS (reproduction + replication)
 RUN cd reproduction/ACAS_Xu && \
     conda create -n acas python=3.7.9 && \
     conda env update --name acas --file experiment_ACAS.yml && \
     conda install --name acas pandas && \
     cd ../..
 ## BW
-# RUN conda init bash && . ~/.bashrc && \
-#     cd reproduction/Bipedal_Walker && \
-#     conda create -n RLWalk python=3.6.3 && \
-#     conda activate RLWalk && \
-#     conda env update --name RLWalk --file environment_RLWalk.yml && \
-#     conda activate RLWalk && cp ./gym/setup.py ./ && \
-#     pip install -e . && \
-#     cp ./stable_baselines3/setup.py ./ && \
-#     pip install -e . && \
-#     cd ../..
-## COOP
-# RUN conda init bash && . ~/.bashrc && \
-#     cd reproduction/Coop_Navi && \
-#     conda create -n marl python=3.5.4 && \
-#     conda env update --name marl --file commented_MARL.yml && \
-#     conda activate marl && \
-#     pip install --upgrade pip && \
-#     pip install -r requirements.txt && \
-#     pip install tensorflow-gpu==1.15.0 && \
-#     pip install pandas==0.25.3 && \
-#     cd ./maddpg && \
-#     pip install -e . && \
-#     cd ../multiagent-particle-envs && \
-#     pip install -e . && \
-#     cd ../../../
+RUN conda init bash && . ~/.bashrc && \
+    cd reproduction/Bipedal_Walker && \
+    conda create -n RLWalk python=3.6.3 && \
+    conda activate RLWalk && \
+    conda env update --name RLWalk --file environment_RLWalk.yml && \
+    conda activate RLWalk && cp ./gym/setup.py ./ && \
+    pip install -e . && \
+    cp ./stable_baselines3/setup.py ./ && \
+    pip install -e . && \
+    cd ../..
+## COOP (reproduction)
+RUN conda init bash && . ~/.bashrc && \
+    cd reproduction/Coop_Navi && \
+    conda create -n marl python=3.5.4 && \
+    conda env update --name marl --file commented_MARL.yml && \
+    conda activate marl && \
+    pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install tensorflow-gpu==1.15.0 && \
+    pip install pandas==0.25.3 && \
+    cd ./maddpg && \
+    pip install -e . && \
+    cd ../multiagent-particle-envs && \
+    pip install -e . && \
+    cd ../../../
+
 ## CART
-# RUN conda init bash && . ~/.bashrc && \
-#     cd replication/cart && \
-#     conda create -n cart python=3.10.12 && \
-#     conda activate cart && \
-#     pip install -r requirements.txt && \
-#     pip install git+https://github.com/DennisGross/gimitest.git && \
-#     cd ../..
-
-
+RUN conda init bash && . ~/.bashrc && \
+    cd replication/cart && \
+    conda create -n cart python=3.10.12 && \
+    conda activate cart && \
+    pip install -r requirements.txt && \
+    pip install git+https://github.com/DennisGross/gimitest.git@414c609217f6c585da6827607e23a1b83ddb1990 && \
+    cd ../..
+## COOP (replication)
+    RUN conda init bash && . ~/.bashrc && \
+    cd replication/coop && \
+    conda create -n coop python=3.5.4 && \
+    conda env update --name coop --file environment_marl.yml && \
+    conda activate coop && \
+    pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install tensorflow-gpu==1.15.0 && \
+    pip install pandas==0.25.3 && \
+    pip install matplotlib==3.0.3 && \
+    pip install Pillow && \
+    cd ./maddpg && \
+    pip install -e . && \
+    cd ../multiagent-particle-envs && \
+    pip install -e . && \
+    cd ../../../
+## RL
+RUN conda init bash && . ~/.bashrc && \
+    cd replication/rl && \
+    conda create -n rl python=3.6.3 && \
+    conda activate rl && \
+    conda env update --name rl --file environment_rl.yml && \
+    conda activate rl && cp ./gym/setup.py ./ && \
+    pip install -e . && \
+    cp ./stable_baselines3/setup.py ./ && \
+    pip install -e . && \
+    cd ../..
 ## CARLA
 # RUN conda init bash && . ~/.bashrc && \
 #     cd replication/carla && \
@@ -115,9 +142,3 @@ RUN cd reproduction/ACAS_Xu && \
 # conda init && \
 # bash"]
 CMD ["bash"]
-# conda activate acas && \
-# pip install matplotlib pandas && \
-# python my_simulate_demo.py && \
-# cp -r fuzzer_fuzzing_logs.txt /output && \
-# cp -r mdpfuzz_fuzzing_logs.txt /output && \
-# cp -r fault_discovery_plot.png /output"]

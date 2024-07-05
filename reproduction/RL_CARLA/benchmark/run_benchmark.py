@@ -186,6 +186,12 @@ def run_single(env, weather, start, target, agent_maker, seed, path: str, em_gui
         # no_coverage indicates whether to skip the coverage computation
         no_coverage = not em_guide
 
+
+        print('receive path:', path)
+        if not os.path.isdir(path):
+            path = '../../' + path
+            print('new path', path)
+
         if no_coverage:
             path += 'fuzzer/'
         else:
