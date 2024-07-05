@@ -23,11 +23,6 @@ def load_log_file(filename: str):
 
     logger = Logger(filename)
     df = logger.load_logs()
-    #TODO: remove this fix in the release!
-    if 'fuzzer' in filename and 'carla' in filename:
-        # print(f'changing inputs found in file {filename}')
-        df['input'] = np.arange(len(df))
-
     return df
 
 

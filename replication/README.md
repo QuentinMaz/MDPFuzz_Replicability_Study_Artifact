@@ -3,7 +3,7 @@
 This repository contains the material of the replication study conducted in the paper *Replicability Study: Policy Testing with MDPFuzz*.
 As such, some of the code is borrowed from the [original implementation of MDPFuzz](https://github.com/Qi-Pang/MDPFuzz).
 
-## Replication Study
+## Research Questions
 
 The study aims to (RQ2) check the fault discovery ability of the fuzzers (*Fuzzer-R* and *MDPFuzz-R*) and to (RQ3) investigate the parameter sensibility of the latter (only *MDPFuzz* is parametrized).
 We consider the (fixed) original use cases (see the reproduction study; see `reproduction/README`) and new ones, and, compared to the reproduction study, we include in the evaluation a random testing baseline.
@@ -39,7 +39,7 @@ We separate the data analysis of RQ2 from RQ3, so that you can first execute and
 Similarly to the reproduciton experiments in `reproduction/`, you will find for each use case bash scripts to help you launch the experiments (namely, `launch_rq2.sh` and `launch_rq3.sh`).
 To use them though, it might be required to make the script executable, which can be done with `chmod +x launch_rq2.sh` and `chmod +x launch_rq3.sh`.
 
-## Computating the results and plotting the figures
+## Computing the results and plotting the figures
 
 To process the data and plot the results, use the virtual environment `rl` (`conda activate rl`).
 
@@ -53,11 +53,16 @@ To process the data and plot the results, use the virtual environment `rl` (`con
 - Compute the results of Figure 5 (sensibility to $\tau$) with `python compute_and_plot_rq3_tau.py`. The figure is saved as `rq3_tau.png` and the data in `results_rq3/`.
 - Compute the results of Figure 6 (sensibility to $K$ and $\gamma$) with `python compute_and_plot_rq3.py`. The figure is saved as `rq3.png` and the data in `results_rq3/`.
 
+### Fault Distribution Analysis
+
+Project the faults in 2D with TSNE with `python compute_and_plot_fault_analysis.py`. The figure is saved as `fault_distribution.png`.
+
 All the `compute_*.py` scripts mentioned above account for the potential miss of data for *CARLA*.
-If you using the container, don't forget to copy the results to your local system with:
+If you are using the container, don't forget to copy the results to your local system with:
 ```
 cp rq2_fault.png /output
 cp rq2_time.png /output
 cp rq3_tau.png /output
 cp rq3.png /output
+cp fault_distribution.png /output
 ```
