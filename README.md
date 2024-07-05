@@ -55,11 +55,23 @@ Overall, the artifact consists in:
 
 ### Step-by-step Instructions
 
-##### Reproduction Study
+Run a container named `exp_container` with a connection to your local file system with:
+```
+docker run --name exp_container -v .:/output -it artifact
+```
+You can stop the container with `exit` (once in the terminal).
+To restart the container (since you won't be able to run all the experiments at all):
+```
+docker start exp_container
+docker exec -it exp_container /bin/bash
+```
+
+
+#### Reproduction Study
 
 Navigate to the folder `reproduction/` and follow the `README` file.
 
-##### Replication Study
+#### Replication Study
 
 Navigate to the folder `replication/` and follow the `README` file.
 

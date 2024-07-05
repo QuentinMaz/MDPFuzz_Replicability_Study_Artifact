@@ -19,9 +19,14 @@ Once experiments have been executed, the results can be extracted from the logs 
 We recommend using either the virtual environment `RLWalk` -- installed for the *Bipedal Walker* case study (see the instructions in `Bipedal_Walker/`) -- or `acas` (see the instructions in `ACAS_Xu/`).
 The script computes the results, stores them in `results/` and creates the figure presented in the paper (`fault_discovery_plot.png`).
 
-## Data Availability
+If you are using the Docker image, copy the file to your local system with:
+```
+cp fault_discovery_plot.png /output
+```
 
-The data used in the paper is available on [Zenodo](https://zenodo.org/records/10910437).
+<!-- ## Data Availability
+
+The data used in the paper is available on [Zenodo](https://zenodo.org/records/10910437). -->
 
 ## Additional Notes
 

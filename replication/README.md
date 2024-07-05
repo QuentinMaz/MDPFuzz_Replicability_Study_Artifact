@@ -36,6 +36,9 @@ To that regard, we remind the user *CARLA* is compatible with Docker and that it
 
 We separate the data analysis of RQ2 from RQ3, so that you can first execute and plot the figures for RQ2 before starting the parameter analysis (i.e, RQ3).
 
+Similarly to the reproduciton experiments in `reproduction/`, you will find for each use case bash scripts to help you launch the experiments (namely, `launch_rq2.sh` and `launch_rq3.sh`).
+To use them though, it might be required to make the script executable, which can be done with `chmod +x launch_rq2.sh` and `chmod +x launch_rq3.sh`.
+
 ## Computating the results and plotting the figures
 
 To process the data and plot the results, use the virtual environment `rl` (`conda activate rl`).
@@ -51,3 +54,10 @@ To process the data and plot the results, use the virtual environment `rl` (`con
 - Compute the results of Figure 6 (sensibility to $K$ and $\gamma$) with `python compute_and_plot_rq3.py`. The figure is saved as `rq3.png` and the data in `results_rq3/`.
 
 All the `compute_*.py` scripts mentioned above account for the potential miss of data for *CARLA*.
+If you using the container, don't forget to copy the results to your local system with:
+```
+cp rq2_fault.png /output
+cp rq2_time.png /output
+cp rq3_tau.png /output
+cp rq3.png /output
+```

@@ -73,7 +73,7 @@ RUN conda init bash && . ~/.bashrc && \
     conda create -n cart python=3.10.12 && \
     conda activate cart && \
     pip install -r requirements.txt && \
-    pip install git+https://github.com/DennisGross/gimitest.git && \
+    pip install git+https://github.com/DennisGross/gimitest.git@414c609217f6c585da6827607e23a1b83ddb1990 && \
     cd ../..
 ## COOP (replication)
     RUN conda init bash && . ~/.bashrc && \
