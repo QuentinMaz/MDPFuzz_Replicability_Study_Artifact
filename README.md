@@ -31,18 +31,18 @@ Similarly, for that use case we strongly recommend a graphic card.
 
 Therefore, we encourage the user to use the Docker image and replicate the other use cases, since we deem the *CARLA*'s experiments untractable (we needed around three months to setup and succesfully run all of them).
 
-#### Running the experiements on your system
+#### Running the experiments on your system
 If you want to install the virtual environments on your local machine, the only requirement for is to install Python as well as Conda, whose installation instructions can be found [here](https://www.python.org/downloads/) and [here](https://docs.anaconda.com/miniconda/#quick-command-line-install), respectively.
 Your system should be ready for running the experiments once the command `conda` works on your system (you can quickly check that with `conda --version`).
 
-#### Running the experiments inside the container
+<!-- #### Running the experiments inside the container
 If you want to use the provided Docker image, run the following commands:
 ```bash
 # build the image
 docker build -t artifact .
 # run the image iteractively
 docker run -it artifact
-```
+``` -->
 
 ## Detailed Description
 
@@ -60,7 +60,7 @@ Run a container named `exp_container` with a connection to your local file syste
 docker run --name exp_container -v .:/output -it artifact
 ```
 You can stop the container with `exit` (once in the terminal).
-To restart the container (since you won't be able to run all the experiments at all):
+To restart the container (since you won't be able to run all the experiments at once):
 ```
 docker start exp_container
 docker exec -it exp_container /bin/bash
@@ -74,6 +74,8 @@ Navigate to the folder `reproduction/` and follow the `README` file.
 #### Replication Study
 
 Navigate to the folder `replication/` and follow the `README` file.
+
+The two studies are independent: you can start replicating them in any order.
 
 ## Demonstration
 

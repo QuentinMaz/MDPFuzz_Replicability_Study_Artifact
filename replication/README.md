@@ -16,7 +16,7 @@ Each folder contains the implementation of a case study, except `rl/`, which inc
 
 In each sub folder, follow the `README` file which details:
 1. How to manually install the Python virtual environment (only needed if you are not using the Docker image). If not, simply make sure to have the correct environment activated.
-2. Execute the required computation.
+2. Execute the required computations.
 
 The three policy testing methods studied (*Fuzzer-R*, *MDPFuzz-R*, *Random Testing*) are implemented in `methods/`.
 
