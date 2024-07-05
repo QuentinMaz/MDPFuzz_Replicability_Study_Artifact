@@ -18,7 +18,7 @@ The scenarios (also called *environments*) solved by the policies are quite dive
 ### Requirements
 
 The experiments solely use [Python](https://www.python.org/), and the dependencies of each case study is installed in virtual environments with the package manager Conda.
-We provide a Docker image which has already all the virtual environments installed (except the one for the use case *CARLA*; see below).
+We provide a Docker image which has already all the virtual environments installed (except the ones for the use case *CARLA*; see below).
 As such, we invite the user to follow the software's instructions, which are detailed [here](https://docs.docker.com/engine/install/).
 We also detail how to install each virtual environment as the beginning of the corresponding `README` files in case the Docker image is not used.
 To that regard, we tested them with a Ubuntu 20.04 system.
@@ -80,11 +80,11 @@ docker exec -it exp_container /bin/bash
 
 #### Reproduction Study
 
-Navigate to the folder `reproduction/` and follow the `README` file.
+Navigate to the folder `reproduction/` (`cd reproduction`) and follow the `README` file.
 
 #### Replication Study
 
-Navigate to the folder `replication/` and follow the `README` file.
+Navigate to the folder `replication/` (`cd replication`) and follow the `README` file.
 
 The two studies are independent: you can start replicating them in any order.
 Once you have finished replicating the studies, delete the container and the Docker image:
@@ -110,7 +110,7 @@ docker run --rm -v .:/output -it artifact
 Then, navigate to the *ACAS Xu* use case of the reproduction folder and activate the corresponding Python environment:
 ```bash
 (in the docker container)
-cd /src/reproduction/ACAS
+cd /src/reproduction/ACAS_Xu
 conda activate acas
 ```
 If you prefer to install the latter on your system locally, follow the instructions in the use case reproduction folder (make sure to activate the environment upon completion).
