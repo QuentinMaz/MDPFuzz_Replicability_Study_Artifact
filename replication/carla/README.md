@@ -97,11 +97,11 @@ CUDA_VISIBLE_DEVICES= python my_server_runner.py $args --disable-cuda --disable-
 MDPFuzz can be executed for a particular configuration and seed with the script `launch_mdpfuzz.sh`.
 It launches `my_server_runner.py` (in GPU mode), on port `$2` and with the configuration ($K$, $\tau$, $\gamma$) and seed read at line `$1` in the file `parameters.txt`.
 
-**To replicate the paper, you thus need to launch the script above 66 times, with $1 from 0 to 65**, e.g.:
+**To replicate the paper, you thus need to launch the script above 66 times, with $1 from 1 to 66**, e.g.:
 ```bash
-./launch_mdpfuzz.sh 0 1453
-./launch_mdpfuzz.sh 1 1500
-./launch_mdpfuzz.sh 2 1550
+./launch_mdpfuzz.sh 1 1453
+./launch_mdpfuzz.sh 2 1500
+./launch_mdpfuzz.sh 3 1550
 # ...
 ```
 
