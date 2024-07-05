@@ -82,8 +82,14 @@ This demonstration tests the two testing methods of the reproduction study (refe
 
 #### Instructions
 
-If you are using the container, navigate to the *ACAS Xu* use case of the reproduction folder with `cd reproduction/ACAS_Xu` and activate the corresponding Python environment with `conda activate acas`.
-If you prefer to install the latter on your system, follow the instructions there (make sure to activate the environment upon completion).
+If you are using the container, navigate to the *ACAS Xu* use case of the reproduction folder and activate the corresponding Python environment:
+```bash
+(in the docker container)
+cd /src/reproduction/ACAS
+conda activate acas
+```
+If you prefer to install the latter on your system locally, follow the instructions in the use case reproduction folder (make sure to activate the environment upon completion).
+
 Then, execute each method for 10 minutes:
 ```python
 # MDPFuzz-O
