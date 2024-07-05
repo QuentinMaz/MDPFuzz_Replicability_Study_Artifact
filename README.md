@@ -46,6 +46,7 @@ docker run -it artifact
 
 If you are running a non-x86 system, e.g. Apple Silicon, you must add the target platform to the Docker commands.
 This is necessary, because the reproduction requires an old Python version (3.7.4) which is not available for the aarch64 architecture.
+You must further ensure that the Docker VM has sufficient memory, at least 8GB. See [this torch issue](https://github.com/pytorch/pytorch/issues/1022) and [this stackoverflow question](https://stackoverflow.com/questions/44533319/how-to-assign-more-memory-to-docker-container) for context.
 ```bash
 # Build the image
 docker build --platform linux/amd64 -t artifact .
