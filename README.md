@@ -76,6 +76,12 @@ Navigate to the folder `reproduction/` and follow the `README` file.
 Navigate to the folder `replication/` and follow the `README` file.
 
 The two studies are independent: you can start replicating them in any order.
+Once you have finished replicating the studies, delete the container and the Docker image:
+```
+docker kill exp_container
+docker rm exp_container
+docker rmi artifact
+```
 
 ## Demonstration
 
