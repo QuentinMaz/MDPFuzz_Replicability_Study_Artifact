@@ -4,6 +4,9 @@ FROM continuumio/miniconda3
 # Set environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Don't cache pip packages, should reduce memory usage
+ENV PIP_NO_CACHE_DIR=1
+
 # Update and install dependencies
 RUN apt-get update && \
     apt-get install -y wget bzip2 && \
