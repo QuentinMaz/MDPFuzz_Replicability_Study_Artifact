@@ -4,12 +4,12 @@
 
 Setup the environment:
 ```bash
-conda create -n rl python=3.6.3
-conda env update --name rl --file environment_rl.yml
-conda activate rl
-cp ./gym/setup.py ./
-pip install -e .
-cp ./stable_baselines3/setup.py ./
+conda create -n rl python=3.6.3 && \
+conda env update --name rl --file environment_rl.yml && \
+conda activate rl && \
+cp ./gym/setup.py ./ && \
+pip install -e . && \
+cp ./stable_baselines3/setup.py ./ && \
 pip install -e .
 ```
 
