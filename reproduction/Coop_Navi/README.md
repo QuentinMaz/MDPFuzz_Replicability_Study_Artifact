@@ -9,6 +9,7 @@ Run the follwoing commands, adapted from the original instructions (`ORIGINAL_RE
 conda create -n marl python=3.5.4
 conda env update --name marl --file commented_MARL.yml
 conda activate marl
+pip install --upgrade pip
 pip install -r requirements.txt
 pip install tensorflow-gpu==1.15.0
 pip install pandas==0.25.3

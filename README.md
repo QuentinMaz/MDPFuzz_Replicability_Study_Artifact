@@ -72,7 +72,11 @@ This demonstration tests the two testing methods of the reproduction study (refe
 
 #### Instructions
 
-If you are using the container, navigate to the *ACAS Xu* use case of the reproduction folder with `cd reproduction/ACAS_Xu` and activate the corresponding Python environment with `conda activate acas`.
+Run a container that will be automatically removed once the terminal is closed, with a connection to your local file system with:
+```
+docker run --rm -v .:/output -it artifact
+```
+If you are using the container, simply navigate to the *ACAS Xu* use case of the reproduction folder with `cd reproduction/ACAS_Xu` and activate the corresponding Python environment with `conda activate acas`.
 If you prefer to install the latter on your system, follow the instructions there (make sure to activate the environment upon completion).
 Then, execute each method for 10 minutes:
 ```python
@@ -87,6 +91,13 @@ cd ..
 python result_script.py
 ```
 The plot is exported to the file `fault_discovery_plot.png`.
+If you are using the container, export the file to your local system and exit the container:
+```
+cp fault_discovery_plot.png /output
+exit
+```
+The file should appear in you current directory.
+The plot function is designed to work with the final results: therefore, the time axis (horizontal) does not correspond to the time of the demonstration (10 minutes).
 <!-- First, build the Docker image with `docker build -t demo .`. Then, run the image into a container with the command `docker run --rm -v .:/output demo`.
 The command above ensures that container is automatically shut down once finished.
 The results (both the image and the raw, log files) are exported in the current repository. -->

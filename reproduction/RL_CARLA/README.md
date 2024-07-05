@@ -47,9 +47,13 @@ GPU can be manually disabled with the additional argument `--disable-cuda`.
 
 Please note that:
 - Since our hardware does not have GPU, we doubled the original sampling and fuzzing times. You can revert this change in `benchmark/run_benchmark.py` lines 183-184.
-- We did not log the inputs tested. Indeed, they include the positions of all the vehicles (100) and we deemed the possibility the generate identical inputs negligible (let alone the stochastic nature of the executions).
+- We did not log the inputs tested. Indeed, they include the positions of all the vehicles (100) and we deemed the possibility the generating identical inputs negligible (let alone the stochastic nature of the executions).
 - We used the following seeds: 2023, 2006 and 1453.
 
 Logs of the executions are automatically saved in `../data/carla/`.
 
 To summarize, replicating the paper can be done by running 3 times `python benchmark_agent.py ...` with and without `--emguide` (to execute *Fuzzer-O* and *MDPFuzz-O*) with the seeds 2006, 2023 and 1453. However, the executions being stochastic, the results won't be exactly the same as the ones presented in the paper.
+
+#### Troubleshooting
+
+- **Infinite loop:** when attempting to use Pytorch with CUDA enabled, loading the model (`benchmark_agent.py`, lines 38-40) creates an <ins>infinite loop</ins>. We solved the issue by propagating the Pytorch's device in the models' classes implemented in `bird_view/models/`. However, given the unstable nature of the implementation, we recommend disabling CUDA (`--disable-cuda`).

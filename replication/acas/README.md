@@ -16,7 +16,7 @@ If you are using the Docker image, simply activate the latter with `conda activa
 
 ### RQ2: Fault Discovery Evaluation
 
-To replicate one method, use the script `test_acas.py`, whose arguments are the folder where to save the results and the method's name (`fuzzer`, `mdpfuzz` or `rt`).
+To replicate one method, use the script `test_acas.py PATH METHOD`, whose arguments are the folder where to save the results and the method's name (`fuzzer`, `mdpfuzz` or `rt`).
 The script sequentially repeats the executions 5 times (with the random seeds used in the paper).
 Besides, we provide the script `launch_rq2.sh` to conveniently launch the three methods in seperate threads.
 Even if you don't use the aforementioned script, we strongly recommend using the default path for logging the results ``../data_rq2/acas/``, i.e.:

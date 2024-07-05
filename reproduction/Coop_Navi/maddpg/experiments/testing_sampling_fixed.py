@@ -407,7 +407,10 @@ if __name__ == '__main__':
 
     folder = '../../../data/coop/'
     if not os.path.isdir(folder):
-        os.mkdir(folder)
+        try:
+            os.mkdir(folder)
+        except:
+            pass
     subfolder = 'sampling_fixed/'
     if not os.path.isdir(folder + subfolder):
         try:
