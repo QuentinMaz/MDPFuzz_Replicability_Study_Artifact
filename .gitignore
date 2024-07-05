@@ -25,3 +25,7 @@ reproduction/RL_CARLA/carla_RL_IAs
 reproduction/RL_CARLA/model_RL_IAs_only_town01_train_weather
 reproduction/RL_CARLA/CARLA_0.9.6.tar.gz
 reproduction/RL_CARLA/model_RL_IAs_only_town01_train_weather.zip
+replication/carla/carla_RL_IAs
+replication/carla/model_RL_IAs_only_town01_train_weather
+replication/carla/CARLA_0.9.6.tar.gz
+replication/carla/model_RL_IAs_only_town01_train_weather.zip

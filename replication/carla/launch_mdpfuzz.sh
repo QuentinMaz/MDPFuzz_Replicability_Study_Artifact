@@ -41,4 +41,4 @@ echo "port: $port"
 echo "path: $path"
 
 args="--suite=town2 --max-run 100 --path-folder-model model_RL_IAs_only_town01_train_weather/ --crop-sky --disable-cudnn --seed 2022 --method-index 2 --method-init 1000 --method-testing 5000"
-conda run -n carla python my_mdpfuzz.py $args --port=$port --method-seed $seed --path $path --k $k --tau $tau --gamma $gamma
+python my_server_runner.py $args --port=$port --method-seed $seed --path $path --k $k --tau $tau --gamma $gamma

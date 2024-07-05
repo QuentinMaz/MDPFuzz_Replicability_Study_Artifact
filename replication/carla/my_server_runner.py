@@ -284,7 +284,7 @@ if __name__ == '__main__':
                     os.kill(server_pid, signal.SIGTERM)
                 except ProcessLookupError:
                     print('Subprocess not found. Already finished?')
-                print('Server process killed.')
+                print('Server process successfully killed.')
                 print('Reading the real process to kill in {} ...'.format(pid_file))
                 try:
                     with open('../../{}'.format(pid_file), 'r') as f:
@@ -292,7 +292,7 @@ if __name__ == '__main__':
                     print('Got PID {}.'.format(pid))
                     try:
                         os.kill(pid, signal.SIGTERM)
-                        print('Server killed!')
+                        print('Server successfully killed!')
                     except ProcessLookupError:
                         print('Something went wrong when (finally...) trying to kill sub-sub-process.')
                 except FileNotFoundError as e:
