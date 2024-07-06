@@ -17,10 +17,13 @@ By default, the executions log the data under `data/`.
 
 Once experiments have been executed, the results can be extracted from the logs with the Python script `result_script.py`.
 We recommend using either the virtual environment `RLWalk` -- installed for the *Bipedal Walker* case study (see the instructions in `Bipedal_Walker/`) -- or `acas` (see the instructions in `ACAS_Xu/`).
-The script computes the results, stores them in `results/` and creates the figure presented in the paper (`fault_discovery_plot.png`).
+The script computes the results, stores them in `results/` and creates the figure presented in the paper (`fault_discovery_plot.png`) in the current directory.
 
-If you are using the Docker image, copy the file to your local system with:
-```
+If you are using the Docker image, don't forget to copy the file to your local system with:
+```bash
+(in the folder reproduction/)
+conda activate acas
+python result_script.py
 cp fault_discovery_plot.png /output
 ```
 
@@ -34,5 +37,20 @@ The experiments all share the same protocol, which consists of **2 hours** of in
 As such, unless the use cases are run in parallel, this entire study could take several days to complete.
 The amount of data generated should be at most 2.0 GB.
 As introduced previously, we strongly recommend avoiding the use case *CARLA* unless the user wants to *exactly* replicate the study.
+We remind that *CARLA* cannot be run inside the container and, as such, the entire artifact has to be replicated on your system locally (or copy all the data stored in `data/` with `cp -r data/ /output`).
 We provide convenient bash scripts to execute the experiments in parallel, called `launch_experiments.sh`, for each case studied.
 To use them though, it might be required to make the script executable, which can be done with `chmod +x launch_experiments.sh`.
+
+## Data Availability
+
+If you can't (or don't want to) reproduce all the experiments, you can download [the data we uploaded on Zenodo in the original submission](https://zenodo.org/records/10910437).
+
+### Instructions
+
+Download (the data using the link below) and copy-paste it in `data/`.
+Then, install the virtual environment `RLWalk`, whose instructions are detailed in `Bipedal_Walker/`.
+Finally, activate the latter and run the Python script mentioned above:
+```
+conda activate RLWalk
+python result_script.py
+```

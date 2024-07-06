@@ -6,6 +6,7 @@ As such, some of the code is borrowed from the [original implementation of MDPFu
 ## Research Questions
 
 The study aims to (RQ2) check the fault discovery ability of the fuzzers (*Fuzzer-R* and *MDPFuzz-R*) and to (RQ3) investigate the parameter sensibility of the latter (only *MDPFuzz* is parametrized).
+The final version of the paper also contains a distribution analysis of the faults.
 We consider the (fixed) original use cases (see the reproduction study; see `reproduction/README`) and new ones, and, compared to the reproduction study, we include in the evaluation a random testing baseline.
 
 Besides, we increase the robustness of the results by repeating every experiment 5 times (compared to 3 conducted in the reproduction study, something we did to follow the original experimental protocol of [MDPFuzz](https://github.com/Qi-Pang/MDPFuzz)).
@@ -32,12 +33,12 @@ The parameter analysis of *MDPFuzz* (RQ3) first shows that the parameter $\tau$ 
 
 Therefore, for **each case study**, the parameter analysis (RQ3) requires **110** executions.
 That's the reason why we definitively deem the *CARLA* case study untractable.
-To that regard, we remind the user *CARLA* is compatible with Docker and that it has to be setup manually (see the instructions in `carla/`).
+To that regard, we remind the user *CARLA* is compatible with Docker and that it has to be setup manually (see the instructions in `carla/`). If so, don't forget to copy the data of the container to your local system with `cp -r data_rq2/ /output`.
 
 We separate the data analysis of RQ2 from RQ3, so that you can first execute and plot the figures for RQ2 before starting the parameter analysis (i.e, RQ3).
 
-Similarly to the reproduciton experiments in `reproduction/`, you will find for each use case bash scripts to help you launch the experiments (namely, `launch_rq2.sh` and `launch_rq3.sh`).
-To use them though, it might be required to make the script executable, which can be done with `chmod +x launch_rq2.sh` and `chmod +x launch_rq3.sh`.
+Similarly to the reproduction experiments (in `reproduction/`), you will find for each use case bash scripts to help you launch the experiments (namely, `launch_rq2.sh` and `launch_rq3.sh`).
+To use them though, it might be required to make the scripts executable, which can be done with `chmod +x launch_rq2.sh` and `chmod +x launch_rq3.sh`.
 
 ## Computing the results and plotting the figures
 
@@ -65,4 +66,22 @@ cp rq2_time.png /output
 cp rq3_tau.png /output
 cp rq3.png /output
 cp fault_distribution.png /output
+```
+
+## Data Availability
+
+If you can't (or don't want to) reproduce all the experiments, you can download [the data we uploaded on Zenodo in the original submission](https://zenodo.org/records/10958452).
+
+### Instructions
+
+Download (the data using the link below) and copy-paste it in `data_rq2/`.
+Then, install the virtual environment `rl`, whose instructions are detailed in `rl/`.
+Finally, activate the latter and run the Python scripts mentioned above:
+```bash
+conda activate rl
+python compute_and_plot_rq2_fault.py
+python compute_and_plot_rq2_time.py
+python compute_and_plot_rq3_tau.py
+python compute_and_plot_rq3.py
+python compute_and_plot_fault_analysis.py
 ```

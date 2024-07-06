@@ -4,29 +4,30 @@ This repository is the artifact of the paper *Policy Testing with MDPFuzz (Repli
 Its content consists of a <ins>reproduction</ins> study and a <ins>replication</ins> study of the paper [MDPFuzz: testing models solving Markov decision processes](https://dl.acm.org/doi/abs/10.1145/3533767.3534388).
 <!-- To that regard, the submission was already supported by two distinct code basis of the studies. -->
 This present artifact's structure reflects this, as it is composed of two main folders, namely: `reproduction/` and `replication/`.
-The very own nature of the work makes that it involves a tremendous amount of computation; yet we design the code such that the results should be similar if not identical to the ones in the paper.
+The very own nature of the work makes that it involves a tremendous amount of computations; yet we design the code such that the results should be similar if not identical to the ones in the paper.
 We additionally include a demontration as well as step-by-step instructions to entirely reproduce the two studies.
+Since we acknowledge that running all the experiments is almost untractable, we include Zenodo links to the data used in the original submission for the two studies.
 
 ## Getting Started
 
 ### Introduction
 
-The studies consist in executing testing methods for Reinforcement Learning models (also known as *policies*) in different scenarios, later referred to as *case studies*.
-Each method is executed several times (with differrent random seeds) in order to eventually compute statistical results.
+The studies consist in executing testing methods for Reinforcement Learning models (also known as *policies*) in different scenarios, later referred to as *case studies* or *use cases*.
+Each method is executed several times (with different random seeds) in order to eventually compute statistical results.
 The scenarios (also called *environments*) solved by the policies are quite diverse, but they mainly consist of games and system control problems such as [landing a spacecraft](https://gymnasium.farama.org/) or [driving a taxi](https://gymnasium.farama.org/environments/toy_text/taxi/).
 
 ### Requirements
 
 The experiments solely use [Python](https://www.python.org/), and the dependencies of each case study is installed in virtual environments with the package manager Conda.
 We provide a Docker image which has already all the virtual environments installed (except the ones for the use case *CARLA*; see below).
-As such, we invite the user to follow the software's instructions, which are detailed [here](https://docs.docker.com/engine/install/).
+As such, we invite the user to follow the instructions to install Docker, which are detailed [here](https://docs.docker.com/engine/install/).
 We also detail how to install each virtual environment as the beginning of the corresponding `README` files in case the Docker image is not used.
 To that regard, we tested them with a Ubuntu 20.04 system.
 
 #### Note on *CARLA*
-This use case is by far the most time-consuming to execute and the most difficult to setup and replicate.
+The use case *CARLA* is by far the most time-consuming to execute and the most difficult to setup and replicate.
 Besides the very long execution times, this driving simulator uses a client-server communication, making the Docker image not compatible.
-Therefore, to replicate the related experiments, you will have to install the environment on your local system.
+Therefore, to replicate the related experiments (we studied the latter in the two studies), you will have to install the environment on your local system.
 Similarly, for that use case we strongly recommend a graphic card.
 
 Therefore, we encourage the user to use the Docker image and replicate the other use cases, since we deem the *CARLA*'s experiments untractable (we needed around three months to setup and succesfully run all of them).
@@ -51,17 +52,18 @@ You must further ensure that the Docker VM has sufficient memory, at least 8GB. 
 ```bash
 # Build the image
 docker build --platform linux/amd64 -t artifact .
-# Run the image iteractively
-docker run --platform linux/amd64 -it artifact
 ```
-
+Alternatively, you can pull the image from Docker hub:
+```bash
+docker pull nireza01/artifact
+```
 ## Detailed Description
 
 The testing methods evaluated, as well as the use cases, are implemented in dedicated sub folders, for the two studies (reproduction and replication).
 They all include a `README` file that explains how to install the virtual environment (if you are not using the Docker image) and what commands to execute to replicate the experiments performed in the paper.
 Overall, the artifact consists in:
  1) Running the methods (for a fixed amount of *time* in the reproduction study, and for a fixed amount of *iterations* in the replication study);
- 2) Processing the log files to compute the performance of the methods (as the number of faults found over time/iteration).
+ 2) Processing the log files to compute the performance of the methods (as the number of faults found over time/iteration). This step requires the data of all the use cases except *CARLA*.
  3) Plotting the results.
 
 ### Step-by-step Instructions
@@ -103,7 +105,7 @@ This demonstration tests the two testing methods of the reproduction study (refe
 
 #### Instructions
 
-If you are using the container, start it such that will be automatically removed once the terminal is closed, with a connection to your local file system with:
+If you are using the container, start it such that it will be automatically removed once the terminal is closed, with a connection to your local file system with:
 ```
 docker run --rm -v .:/output -it artifact
 ```
@@ -133,7 +135,7 @@ If you are using the container, export the file to your local system and exit th
 cp fault_discovery_plot.png /output
 exit
 ```
-The file should appear in you current directory.
+The file should appear in your current directory.
 The plot function is designed to work with the final results: therefore, the time axis (horizontal) does not correspond to the time of the demonstration (10 minutes).
 <!-- First, build the Docker image with `docker build -t demo .`. Then, run the image into a container with the command `docker run --rm -v .:/output demo`.
 The command above ensures that container is automatically shut down once finished.
