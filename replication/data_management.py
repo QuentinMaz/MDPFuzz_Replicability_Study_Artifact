@@ -23,6 +23,13 @@ def load_log_file(filename: str):
 
     logger = Logger(filename)
     df = logger.load_logs()
+
+    # The very first runs of Fuzzer with CARLA did not record the inputs correctly (in the logs).
+    # Given the very (very) low probabilitiy of redundant inputs for that use case (subspace of R^406...),
+    # we decided to not repeat the experiments but rather bypass this "technical issue".
+    if 'fuzzer' in filename and 'carla' in filename:
+        # print(f'changing inputs found in file {filename}')
+        df['input'] = np.arange(len(df))
     return df
 
 
@@ -161,18 +168,6 @@ def load_results(path: str) -> Dict[str, Union[str, float, int, Tuple[np.ndarray
     return load_dict(path)
 
 
-
-
-
-
-
-
-
-
-
-# if __name__ == '__main__':
-# exec(open('data_management.py').read())
-
 def find_files(directory, extension):
     file_paths = []
 
@@ -187,25 +182,6 @@ def find_files(directory, extension):
                 file_paths.append(file_path)
 
     return file_paths
-
-# path = '/mnt/c/Users/Quentin/Desktop/reproduction_repository/data/'
-# log_files = find_files(path, extension='_fuzzing_logs.txt')
-
-# tmp = []
-# for f in log_files:
-#     if 'carla' in f:
-#         df = load_log_file(f)
-#         times = df['run_time'].to_numpy()
-
-#         tot = (times[-1] - times[0]) / 3600
-#         print(tot, f)
-        # if tot < 11.9:
-        #     tmp.append(f)
-        #     print(tot, 'for:', f)
-
-# with open('file_to_redo.txt', 'w') as wfile:
-#     for f in tmp:
-#         print(f, file=wfile)
 
 
 def aggregate_iterations(df_list: List[pd.DataFrame], time_step: float = 1.0):
@@ -232,6 +208,7 @@ def aggregate_iterations(df_list: List[pd.DataFrame], time_step: float = 1.0):
         results.append(np.array(iteration_accumulator))
     return results
 
+
 def process_dataframes(df_list: List[pd.DataFrame]):
     '''
     Processes a list of pd.DataFrames.
@@ -244,7 +221,6 @@ def process_dataframes(df_list: List[pd.DataFrame]):
         results.append(df.tail(len(df) - 1))
     return results
 
-# dfl = process_dataframes(df_list)
 
 def aggregate_timestamped_dataframes(df_list: List[pd.DataFrame]):
     concatenated_df = pd.concat(df_list)
@@ -253,9 +229,3 @@ def aggregate_timestamped_dataframes(df_list: List[pd.DataFrame]):
     sorted_df.reset_index(drop=True, inplace=True)
     print('after index reseting', len(sorted_df))
     return sorted_df
-
-# final_df = aggregate_timestamped_dataframes(dfl)
-
-# df = process_dataframes([load_log_file(log_files[0])])[0]
-# acc = aggregate_iterations([df])[0]
-

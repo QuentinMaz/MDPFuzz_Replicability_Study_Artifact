@@ -139,21 +139,21 @@ def plot_results_as_grid(
     [ax.grid(axis='y', color='0.9', linestyle='-', linewidth=1) for ax in axs]
 
 
-    axs[0].set_ylabel(FAULT_LABEL, fontsize=AXIS_LABEL_FONTSIZE)
-    axs[1 + index].set_ylabel(FAULT_LABEL, fontsize=AXIS_LABEL_FONTSIZE)
+    axs[0].set_ylabel(FAULT_LABEL, fontsize=AXIS_LABEL_FONTSIZE + 4)
+    axs[1 + index].set_ylabel(FAULT_LABEL, fontsize=AXIS_LABEL_FONTSIZE + 4)
 
     # iterates over the use-cases
     for u in range(n):
         data = results[u]
         # labeling
-        axs[u].set_title(use_cases[u], fontsize=TITLE_LABEL_FONTSIZE)#, loc='left')
-        axs[u].set_xlabel(X_LABEL, fontsize=AXIS_LABEL_FONTSIZE)
+        axs[u].set_title(use_cases[u], fontsize=TITLE_LABEL_FONTSIZE - 5)#, loc='left')
+        axs[u].set_xlabel(X_LABEL, fontsize=AXIS_LABEL_FONTSIZE + 4)
         y, perc_25, perc_75 = data
         # over iterations
         x = np.arange(0, len(y))
         axs[u].plot(x, y, color=color, label=label)
         axs[u].fill_between(x, perc_25, perc_75, alpha=0.25, linewidth=0, color=color)
-
+        axs[u].tick_params(axis='both', labelsize=18)
     fig.tight_layout()
     return (fig, axs)
 
@@ -170,7 +170,7 @@ def adds_results_to_axs(
     It assumes the axes of shape (1, num_use_cases) and that results are sorted w.r.t axes.
     '''
     ncols = len(axs)
-    assert len(results) == ncols
+    assert len(results) == ncols, len(results)
     for r in range(ncols):
         data = results[r]
         y, perc_25, perc_75 = data
@@ -369,10 +369,11 @@ def plot_k_g_analysis(
     nrows = len(parameter_values)
     ncols = num_use_cases
     if num_use_cases == 1:
-        fig, row_axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(5*num_use_cases, 4*len(parameter_values)))
+        fig, row_axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(5*num_use_cases, 5*len(parameter_values)))
         axs = np.array([[ax] for ax in row_axs])
     else:
-        fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(5*num_use_cases, 4*len(parameter_values)), sharex=True, sharey='col')
+        # fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(5*num_use_cases, 4*len(parameter_values)), sharex=True)#, sharey='col')
+        fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(5*num_use_cases, 5*len(parameter_values)), sharex=True, sharey='col')
 
     for ax in axs.flat:
         ax.grid(axis='y', color='0.9', linestyle='-', linewidth=1)
@@ -402,20 +403,39 @@ def plot_k_g_analysis(
                 label = rf'$\gamma={p2}$' if y_axis == 'k' else rf'$K={p2}$'
                 y, perc_25, perc_75 = result_list[0]
                 x = np.arange(len(y))
-                ax.plot(x, y, color=color, label=label)
+                ax.plot(x, y, color=color, label=label, linewidth=2.5)
                 ax.fill_between(x, perc_25, perc_75, alpha=0.25, linewidth=0, color=color)
 
     # ax = axs.flat[np.argmax([len(ax.get_lines()) for ax in axs.flat])]
     flat_axs = axs.flat
     for i in range(0, len(flat_axs), 2):
         ax = flat_axs[i]
-        legend = ax.legend(prop={'size': 12})
+        legend = ax.legend(prop={'size': 16}, loc="upper center")
         legend_frame = legend.get_frame()
         legend_frame.set_facecolor('0.9')
         legend_frame.set_edgecolor('0.9')
+        # change the line width for the legend
+        for line in legend.get_lines():
+            line.set_linewidth(6.0)
+
+    y_tick_padding = -30
 
     for ax in flat_axs:
         ax.tick_params(axis='both', labelsize=16)
+
+        # moves the latter and their labels inside the plot
+        ax.tick_params(axis="y", direction="in")
+        for tick in ax.yaxis.get_major_ticks():
+            tick.set_pad(y_tick_padding)
+            tick.label1.set_horizontalalignment("center")
+
+    for ax in axs[0]:
+        init_ticks = ax.get_yticks()
+        labels = init_ticks[1:-1]
+        ticks = [int(t) for t in labels]
+
+        ax.set_yticks(ticks)
+        ax.set_yticklabels([""] + [str(t) for t in ticks[1:]])
 
     title = kwargs.get('title', None)
     if title is not None:
