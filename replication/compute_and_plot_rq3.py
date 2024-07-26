@@ -4,11 +4,9 @@ import numpy as np
 from typing import Dict, List
 
 from common import METHOD_LABELS, USE_CASE_LABELS_DICT, USE_CASES
-from data_management import get_data_from_experiment, get_logs,\
-    store_results, load_results, store_dict
-from data_processing import compute_statistical_fault_discovery_results, compute_time_results
-from plotting import create_bar_plots, get_colors, get_gamma_colors, get_method_colors, get_tau_colors,\
-    plot_results, plot_k_g_analysis, adds_results_to_axs
+from data_management import get_logs, store_results, load_results
+from data_processing import compute_statistical_fault_discovery_results
+from plotting import get_gamma_colors, get_method_colors, plot_k_g_analysis
 
 '''
 This file retrieves the data from the parameter sensibility analysis \
@@ -37,7 +35,9 @@ if __name__ == '__main__':
     rq3_results = []
     labels = []
     for k in K:
+        print("Processing results for K = {} ...".format(k))
         for g in G:
+            print("... With gamma = {}".format(g))
             results_path = f'{rq3_results_folder}/mdpfuzz_{k}_{TAU}_{g}'
             d = {
                 'k': k,
@@ -64,7 +64,6 @@ if __name__ == '__main__':
                         if key not in labels:
                             labels.append(key)
                     # logs.append(config_logs)
-
                 # assert len(logs) == 7, f'{k}_{TAU}_{g}_'
                 fault_results = compute_statistical_fault_discovery_results(logs)
                 results = store_results(use_case_found, fault_results, results_path, d)
@@ -75,6 +74,7 @@ if __name__ == '__main__':
                     if (u in use_case_keys) and (u not in labels):
                         labels.append(u)
             rq3_results.append(results)
+        print("Processing K = {} done!".format(k))
     gamma_dict = {g: c for g, c in zip(G, get_gamma_colors())}
     fig, axs = plot_k_g_analysis(
         labels,

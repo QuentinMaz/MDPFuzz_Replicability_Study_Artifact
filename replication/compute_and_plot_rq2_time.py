@@ -4,11 +4,9 @@ import numpy as np
 from typing import Dict, List
 
 from common import METHOD_LABELS, USE_CASES, USE_CASE_LABELS_DICT
-from data_management import get_data_from_experiment, get_logs,\
-    store_results, load_results, store_dict
-from data_processing import compute_statistical_fault_discovery_results, compute_time_results
-from plotting import create_bar_plots, get_colors, get_gamma_colors, get_method_colors, get_tau_colors,\
-    plot_results, plot_k_g_analysis, adds_results_to_axs
+from data_management import get_data_from_experiment, load_results, store_dict
+from data_processing import compute_time_results
+from plotting import create_bar_plots, get_colors, get_method_colors
 
 '''
 This file processes the data from data_rq2/ and performs time analysis of the paper.
@@ -37,7 +35,7 @@ if __name__ == '__main__':
         results_path = f'{rq2_results_folder}/time_{name}'
         if not LOAD:
             dict_list = []
-            for case in ['acas', 'bw', 'cart', 'coop', 'll', 'tt']:
+            for case in use_case_keys:
                 try:
                     dict_list.append(
                         get_data_from_experiment(

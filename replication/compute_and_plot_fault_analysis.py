@@ -1,4 +1,6 @@
 import json
+import os
+import sys
 
 from matplotlib.gridspec import GridSpec
 from data_management import get_logs
@@ -8,6 +10,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Dict, Union
 from sklearn.manifold import TSNE
+
+sys.path.append('methods/src')
+from logger import Logger
 
 
 FOLDER_TO_LABEL = {
@@ -58,6 +63,21 @@ def load_dict(filepath: str):
     return d
 
 
+def load_log_file(filename: str):
+    if not filename.endswith('.txt'):
+        filename += '.txt'
+    if not os.path.isfile(filename):
+        raise FileNotFoundError("\"{}\" not found.".format(filename))
+    logger = Logger(filename)
+    df = logger.load_logs()
+    return df
+
+
+def get_logs(folder: str, prefix: str = ''):
+    if not folder.endswith('/'):
+        folder += '/'
+    return [load_log_file(folder + f) for f in os.listdir(folder) if f.startswith(prefix) and f.endswith('_logs.txt')]
+
 
 def get_faults(df_list: List[pd.DataFrame], include_unique_faults_only: bool = True):
     data = []
@@ -105,7 +125,7 @@ def plot(data: Dict[str, np.ndarray], figsize=(8,6)):
 
 
 
-def plots(data_list: List[Dict[str, np.ndarray]]):
+def plots(data_list: List[Dict[str, np.ndarray]], point_size: int = 5):
     num_plots = len(data_list)
     # size = 6
     # fig, axs = plt.subplots(nrows=num_plots, ncols=1, figsize=(size, size*num_plots))
@@ -131,7 +151,7 @@ def plots(data_list: List[Dict[str, np.ndarray]]):
                 faults[:, 1],
                 color='xkcd:'+FOLDER_TO_COLOR[name],
                 label=FOLDER_TO_LABEL[name],
-                s=5)
+                s=point_size)
 
     # adds legend to one plot
     ax = axs[2]
@@ -158,7 +178,7 @@ if __name__ == '__main__':
 
     labels = []
     for use_case_folder in use_case_keys:
-        print(f"Proceeding with {use_case_folder}")
+        print(f"Processing {use_case_folder} ...")
         try:
             indices = [0]
             results = []
@@ -195,15 +215,19 @@ if __name__ == '__main__':
             # data = load_dict(
             # f"faults_distribution_{use_case_folder}.json"
             # )
-            print("Something went wrong with use case {}".format(use_case_folder))
-            print(e)
+            # dict_list.append(data)
+            # labels.append(use_case_folder)
+            print("Something went wrong with use case {}:".format(use_case_folder))
+            print('"{}".'.format(e))
+
     fig, axs = plots(dict_list)
     for ax, folder in zip(axs, labels):
-        ax.set_title(FOLDER_TO_TITLE[folder], fontsize=18)
+        ax.set_title(FOLDER_TO_TITLE[folder], fontsize=22)
         ax.set_xticks([])
         ax.set_yticks([])
         ax.set_xticklabels([])
         ax.set_yticklabels([])
     fig.tight_layout()
-    fig.savefig("fault_distribution.png")
-    print("Fault distribution analysis done (see \"fault_distribution.png\").")
+    f = f"fault_distribution.png"
+    fig.savefig(f)
+    print(f"Fault distribution analysis done (see \"{f}\").")

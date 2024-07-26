@@ -4,11 +4,9 @@ import numpy as np
 from typing import Dict, List
 
 from common import METHOD_LABELS, USE_CASE_LABELS_DICT, USE_CASES
-from data_management import get_data_from_experiment, get_logs,\
-    store_results, load_results, store_dict
-from data_processing import compute_statistical_fault_discovery_results, compute_time_results
-from plotting import create_bar_plots, get_colors, get_gamma_colors, get_method_colors, get_tau_colors,\
-    plot_results, plot_k_g_analysis, adds_results_to_axs
+from data_management import get_logs, store_results, load_results
+from data_processing import compute_statistical_fault_discovery_results
+from plotting import get_method_colors, get_tau_colors, plot_results, adds_results_to_axs
 
 '''
 This file retrieves the data from the tau analysis and plots Figure 5.
@@ -76,15 +74,60 @@ if __name__ == '__main__':
         results_to_plot,
         tau_colors[0],
         f'$\\tau={tau_list[0]}$',
-        vertical=False
+        # vertical=False
     )
     for i in [1, 2]:
         d = tau_results[i]
         results_to_plot = [d[u] for u in labels]
         adds_results_to_axs(axs, results_to_plot, tau_colors[i], f'$\\tau={tau_list[i]}$')
 
-    ax = axs[3]
-    legend = ax.legend(prop={'size': 18}, labelspacing=1.0, handletextpad=1.0, borderpad=0.55, borderaxespad=0.7)
+    offset_ytickslabels = False
+    if 'carla' in labels:
+        offset_ytickslabels = True
+        axis_to_legend = axs[3]
+    else:
+        axis_to_legend = axs[2]
+
+    from matplotlib import ticker
+    from matplotlib.transforms import ScaledTranslation
+    dx = 0
+    dy = -6/72.
+    Y_TICK_PADDING = -50
+    offset = ScaledTranslation(dx, dy, fig.dpi_scale_trans)
+
+    def as_thousands_notation(x, pos):
+        if x < 1000:
+            return '{:.0f}'.format(x)
+        else:
+            return '{:.0f} K'.format(x / 1000)
+
+
+    for i, ax in enumerate(axs.flat):
+        if len(ax.get_yticklabels()) > 9:
+            ax.locator_params(axis='y', nbins=6, tight=False, min_n_ticks=5)
+
+        init_ticks = ax.get_yticks()
+        labels = init_ticks[1:-1]
+        ticks = [int(t) for t in labels]
+
+        ax.set_yticks(ticks)
+        ax.set_yticklabels([""] + [str(t) for t in ticks[1:]])
+
+        ax.tick_params(axis="y", direction="in")
+        for tick in ax.yaxis.get_major_ticks():
+            tick.set_pad(Y_TICK_PADDING)
+            tick.label1.set_horizontalalignment("center")
+
+        # slightly offsets the last ytickslabels for the CARLA plot
+        if offset_ytickslabels and (i == 2):
+            last_yticklabel = ax.yaxis.get_majorticklabels()[-1]
+            last_yticklabel.set_transform(last_yticklabel.get_transform() + offset)
+
+        # ax.xaxis.set_major_formatter(ticker.FuncFormatter(as_thousands_notation))
+
+
+    ax = axis_to_legend
+    legend = ax.legend(prop={'size': 18}, labelspacing=1.0, handletextpad=1.0, borderpad=0.55, borderaxespad=0.7, loc="upper center")
     legend_frame = legend.get_frame()
     legend_frame.set_facecolor('0.9')
     legend_frame.set_edgecolor('0.9')
