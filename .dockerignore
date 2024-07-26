@@ -1,3 +1,21 @@
 preprint_version.pdf
 **/__pycache__
 .git
+.gitignore
+# excludes all .zip, .png and .gitkeep files
+**.zip
+**.png
+**.gitkeep
+
+# keeps the directories but excludes potential local files
+reproduction/data/**/*.txt
+reproduction/results/*.json
+
+replication/data_rq2/**/*.txt
+replication/data_rq2/**/*.json
+
+replication/data_rq3/*.txt
+replication/data_rq3/*.json
+
+replication/results_rq2/*.json
+replication/results_rq3/*.json

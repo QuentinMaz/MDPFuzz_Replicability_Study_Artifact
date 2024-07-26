@@ -37,8 +37,9 @@ if __name__ == '__main__':
         for use_case_folder in use_case_folders:
             try:
                 logs = get_fuzzing_logs(f'{data_folder}/{use_case_folder}/mdpfuzz/')
-                mdpfuzz_keys.append(use_case_folder)
-                mdpfuzz_logs.append(logs)
+                if len(logs) != 0:
+                    mdpfuzz_keys.append(use_case_folder)
+                    mdpfuzz_logs.append(logs)
             except Exception as e:
                 print("No MDPFuzz logs found for {}.".format(use_case_folder))
 
@@ -60,8 +61,9 @@ if __name__ == '__main__':
         for use_case_folder in use_case_folders:
             try:
                 logs = get_fuzzing_logs(f'{data_folder}/{use_case_folder}/fuzzer/')
-                fuzzer_keys.append(use_case_folder)
-                fuzzer_logs.append(logs)
+                if len(logs) != 0:
+                    fuzzer_keys.append(use_case_folder)
+                    fuzzer_logs.append(logs)
             except:
                 print("No Fuzzer logs found for {}.".format(use_case_folder))
             # fuzzer_logs.append(get_fuzzing_logs(f'{data_folder}/{use_case_folder}/fuzzer/'))
@@ -198,7 +200,9 @@ if __name__ == '__main__':
         ax.xaxis.set_major_formatter(ticker.FuncFormatter(as_thousands_notation))
 
 
-    print("DONE.")
     filename = 'fault_discovery_plot.png'
+    print("=============================")
+    print("Results of the reproduction study done! (see \"{}\")".format(filename))
+    print("=============================")
     fig.tight_layout()
     fig.savefig(filename)
